@@ -102,3 +102,62 @@ def isPalindrome(s):
             return s[0] == s[-1] and isPal(s[1:-1])
 
     return isPal(toChars(s))
+
+
+#L5 Problem 6 - iterative
+
+def lenIter(aStr):
+    '''
+    aStr: a string
+    
+    returns: int, the length of aStr
+    '''
+    n=0
+    for c in aStr:
+        n+=1
+    return n
+
+#L5 Problem 7 - recursive
+
+def lenRecur(aStr):
+    '''
+    aStr: a string
+    
+    returns: int, the length of aStr
+    '''
+    if aStr=="":
+        return 0
+    return 1+lenRecur(aStr[0:-1])
+    
+# L5 Problem 8 - bisection search
+
+def isIn(char, aStr):
+    '''
+    char: a single character
+    aStr: an alphabetized string
+    
+    returns: True if char is in aStr; False otherwise
+    '''
+    a=False
+    s=sorted(aStr)
+    print s
+    mid=int(len(s)/2)
+    #print mid,s[mid]
+          
+    if char == s[mid]:
+        print char,mid,s[mid]
+        return True
+
+    if char < s[mid]:
+        s=s[:mid]
+        isIn(char,s)
+        return False
+    elif char > s[mid]:
+        s=s[mid:]
+        isIn(char,s)
+        return False
+
+     
+
+        
+    
