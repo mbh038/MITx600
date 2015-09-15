@@ -15,6 +15,7 @@ def annualStatement(balance,annualInterestRate,monthlyPaymentRate):
 def FinalBalance(balance,annualInterestRate,monthlyPayment):
     """
     Calculates balance owed after one year
+    balance = initial balance
     """
     totalPaid=0
     for month in range (1,13):
