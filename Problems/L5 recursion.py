@@ -132,32 +132,78 @@ def lenRecur(aStr):
 # L5 Problem 8 - bisection search
 
 def isIn(char, aStr):
-    '''
-    char: a single character
-    aStr: an alphabetized string
+   '''
+   char: a single character
+   aStr: an alphabetized string
+   
+   returns: True if char is in aStr; False otherwise
+   '''
+   # Base case: If aStr is empty, we did not find the char.
+   if aStr == '':
+      return False
+
+   # Base case: if aStr is of length 1, just see if the chars are equal
+   if len(aStr) == 1:
+      return aStr == char
+
+   # Base case: See if the character in the middle of aStr equals the 
+   #   test character 
+   midIndex = len(aStr)/2
+   midChar = aStr[midIndex]
+   if char == midChar:
+      # We found the character!
+      return True
+   
+   # Recursive case: If the test character is smaller than the middle 
+   #  character, recursively search on the first half of aStr
+   elif char < midChar:
+      return isIn(char, aStr[:midIndex])
+
+   # Otherwise the test character is larger than the middle character,
+   #  so recursively search on the last half of aStr
+   else:
+      return isIn(char, aStr[midIndex+1:])
+      
+#L5 Problem 6 - use of wrapper function
+
+def semordnilapWrapper(str1, str2):
+    # A single-length string cannot be semordnilap
+    if len(str1) == 1 or len(str2) == 1:
+        return False
+
+    # Equal strings cannot be semordnilap
+    if str1 == str2:
+        return False
+
+    return semordnilap(str1, str2)
     
-    returns: True if char is in aStr; False otherwise
+def semordnilap(str1,str2):
     '''
-    a=False
-    s=sorted(aStr)
-    print s
-    mid=int(len(s)/2)
-    #print mid,s[mid]
-          
-    if char == s[mid]:
-        print char,mid,s[mid]
-        return True
-
-    if char < s[mid]:
-        s=s[:mid]
-        isIn(char,s)
+    str1: a string
+    str2: a string
+    
+    returns: True if str1 and str2 are semordnilap;
+             False otherwise.
+    '''
+    
+    # Base case: if strings are of unequal length they cannot be semordnilap
+    if len(str1) != len(str2):
         return False
-    elif char > s[mid]:
-        s=s[mid:]
-        isIn(char,s)
+    
+    #Base case: If first character of str1 is not the same as the last character
+    # of str2,they are not semordnilap
+    if str1[0] != str2[-1]:
         return False
-
-     
-
         
+        # Base case: If strings are both of length 1, they are semordnilap
+    if len (str1) == 1 and len(str2) == 1:
+        if str1==str2:
+            return True
+        else:
+            return False
     
+            
+    # Recursive case: first character of str1 is same as last character of
+    # str2, recursively check this
+
+    return semordnilap(str1[1:],str2[:-1])
