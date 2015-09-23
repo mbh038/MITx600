@@ -102,6 +102,7 @@ def displayHand(hand):
 
     hand: dictionary (string -> int)
     """
+    print "Current Hand: ",
     for letter in hand.keys():
         for j in range(hand[letter]):
              print letter,              # print all on the same line
