@@ -73,9 +73,46 @@ def compPlayHand(hand, wordList, n):
     wordList: list (string)
     n: integer (HAND_SIZE; i.e., hand size required for additional points)
     """
-    # TO DO ... <-- Remove this comment when you code this function
+    # Keep track of the total score
+    score =0
+    newHand=hand.copy()
+    # calculate hand length
+    handLen=n
+
+    while handLen > 0:
+    # As long as there are still letters left in the hand:
+ 
+        # Display the hand
+        displayHand(newHand)
+
+        # Ask computer for input
+        word=compChooseWord(newHand, wordList, handLen)
+
+        # If the input is a single period:
+
+        if word =="None":
+            print ("Total score: " + str(score)+ " points")
+            # End the game (break out of the loop)
+            return
+
+        # Otherwise (the input is not a single period):
+
+        else:
+            score += getWordScore(word, n)
+
+            # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
+            print ("'"+word+"'"+" earned "+str(getWordScore(word, n))+" points. Total: "+str(score)+" points")
+            print
+
+            # Update the hand
+            newHand=updateHand(newHand, word)
+            handLen=calculateHandlen(newHand)
+                      
+    # Game is over (user entered 'None' or ran out of letters), so tell user the total score
+    print ("Total score: " + str(score)+ " points")
+    return
     
-#
+
 # Problem #8: Playing a game
 #
 #
@@ -103,8 +140,53 @@ def playGame(wordList):
 
     wordList: list (string)
     """
-    # TO DO... <-- Remove this comment when you code this function
-    print "playGame not yet implemented." # <-- Remove this when you code this function
+    ngame=0
+    while 1 > 0:
+        print
+        game=raw_input("Enter n to deal a new hand, r to replay the last hand, or e to end game: ")
+        if game == "e":
+            return
+        elif game=="r":
+            if ngame==0:
+                print("You have not played a hand yet. Please play a new hand first!")
+                continue
+            else:
+                player ="x"
+                while player != "u" and player != "c":
+                    player=raw_input("Enter u for user, c for computer: ")
+                    if player != "u" and player != "c":
+                        print("Invalid command")
+                if player == "u":
+                    ngame +=1
+                    playHand(hand, wordList, HAND_SIZE)
+                elif player == "c":
+                    ngame += 1
+                    compPlayHand(hand, wordList, HAND_SIZE)
+                else:
+                    print("Invalid command.")
+                    continue                    
+        elif game=="n":
+                player ="x"
+                while player != "u" and player != "c":
+                    player=raw_input("Enter u for user, c for computer: ")
+                    if player != "u" and player != "c":
+                        print("Invalid command")
+                if player == "u":
+                    ngame +=1
+                    hand=dealHand(HAND_SIZE)
+                    playHand(hand, wordList, HAND_SIZE)
+                elif player == "c":
+                    ngame += 1
+                    hand=dealHand(HAND_SIZE)
+                    compPlayHand(hand, wordList, HAND_SIZE)
+                else:
+                    print("Invalid command.")
+                    continue
+        else:
+            print("Invalid command.")
+            continue
+        
+    #print "playGame not yet implemented." # <-- Remove this when you code this function
 
         
 #
