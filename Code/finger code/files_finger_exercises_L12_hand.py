@@ -115,3 +115,15 @@ print myHand.calculateLen()
 
 myHand.update('za')
 print myHand
+
+## Primes generator
+
+def genPrimes():
+    delta=1
+    primes=[1]
+    for p in primes:
+        if primes[-1]+delta % p = 0:
+            delta += 1
+    return delta
+
+
