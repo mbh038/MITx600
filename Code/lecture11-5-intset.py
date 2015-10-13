@@ -30,34 +30,18 @@ class intSet(object):
         self.vals.sort()
         return '{' + ','.join([str(e) for e in self.vals]) + '}'
 
-    def __str__(self):
-        """Returns a string representation of self"""
-        self.vals.sort()
-        return '{' + ','.join([str(e) for e in self.vals]) + '}'
-        
-    def intersect(self, other):
-        """Assumes other is an intSet
-           Returns a new intSet containing elements that appear in both sets."""
-        # Initialize a new intSet    
-        commonValueSet = intSet()
-        # Go through the values in this set
-        for val in self.vals:
-            # Check if each value is a member of the other set    
-            if other.member(val):
-                commonValueSet.insert(val)
-        return commonValueSet
 
-    def __len__(self):
-        """Returns the length of the set.
-           This method is called by the `len` built-in function."""
-        return len(self.vals)
-            
 
-class queue(object):
-    """A queue is a set of integers
-    The value is represented by a list of ints, self.vals.
-    Each int in the set occurs in self.vals exactly once."""
-
-    def __init__(self):
-        """Create an empty set of integers"""
-        self.vals = []
+# s = intSet()
+# print s
+# s.insert(3)
+# s.insert(4)
+# s.insert(3)
+# print s
+# s.member(3)
+# s.member(5)
+# s.insert(6)
+# print s
+# s.remove(3)
+# print s
+# s.remove(3)
