@@ -85,43 +85,69 @@ class Trigger(object):
 # Whole Word Triggers
 # Problems 2-5
 
-# TODO: WordTrigger
 class WordTrigger(Trigger):
     def __init__(self,word):
-        self.word=word
+        self.word=word.lower()
     def isWordIn(self,text):
+        text=text.replace("'s"," s")
+        text=text.lower()
         for i in range(len(string.punctuation)):
             text=text.replace(string.punctuation[i],"")
-        text=text.lower()
         text=text.split(" ")
         return self.word in text
-    def evaluate(self,text):
-        return isWordIn(self,text)
-    
-# TODO: TitleTrigger
+
 class TitleTrigger(WordTrigger):
-    def __init__(self,word):
-        self.word=word
+
     def evaluate(self,story):
-        return isWordIn(self,story.title)
+        return self.isWordIn(story.getTitle())
 
-# TODO: SubjectTrigger
-# TODO: SummaryTrigger
+class SubjectTrigger(WordTrigger):
 
+    def evaluate(self,story):
+        return self.isWordIn(story.getSubject())
+    
+class SummaryTrigger(WordTrigger):
+
+    def evaluate(self,story):
+        return self.isWordIn(story.getSummary())
 
 # Composite Triggers
 # Problems 6-8
 
 # TODO: NotTrigger
-# TODO: AndTrigger
-# TODO: OrTrigger
+class NotTrigger(Trigger):
+    def __init__(self,trig):
+        self.trig=trig
+    def evaluate (self,story):
+        return not self.trig.evaluate(story)
 
+# TODO: AndTrigger
+class AndTrigger(Trigger):
+    def __init__(self,trig1,trig2):
+        self.trig1=trig1
+        self.trig2=trig2
+    def evaluate(self,story):
+        return self.trig1.evaluate(story) and self.trig2.evaluate(story)
+
+
+# TODO: OrTrigger
+class OrTrigger(Trigger):
+    def __init__(self,trig1,trig2):
+        self.trig1=trig1
+        self.trig2=trig2
+    def evaluate(self,story):
+        return self.trig1.evaluate(story) or self.trig2.evaluate(story)
 
 # Phrase Trigger
 # Question 9
 
 # TODO: PhraseTrigger
 
+class PhraseTrigger(Trigger):
+    def __init__(self,phrase):
+        self.phrase=phrase
+    def evaluate(self,story):
+        return self.phrase in story.getTitle() or self.phrase in story.getSubject() or self.phrase in story.getSummary()
 
 #======================
 # Part 3
@@ -136,7 +162,14 @@ def filterStories(stories, triggerlist):
     """
     # TODO: Problem 10
     # This is a placeholder (we're just returning all the stories, with no filtering) 
-    return stories
+    okStories=[]   
+    for story in stories:
+        count=0
+        for trigger in triggerlist:
+            if trigger.evaluate(story):
+                okStories.append(story)
+                break
+    return okStories       
 
 #======================
 # Part 4
@@ -277,3 +310,8 @@ if __name__ == '__main__':
     thread.start_new_thread(main_thread, (root,))
     root.mainloop()
 
+def testNot():
+    s=TitleTrigger("soft")
+    t=NotTrigger(s)
+    koala=NewsStory('', 'Koala bears are soft and cuddly', '', '', '')
+    return t.evaluate(koala)
