@@ -192,6 +192,27 @@ def makeTrigger(triggerMap, triggerType, params, name):
     Returns a new instance of a trigger (ex: TitleTrigger, AndTrigger).
     """
     # TODO: Problem 11
+    paramString=" ".join(params)
+    trigParts=[triggerType.capitalize(),"Trigger","(\"",paramString,"\")"]
+    trig="".join(trigParts[:])
+    triggerMap[name]=trig
+    if triggerType=="PHRASE":
+        label="phrase"
+    elif triggerType=="NOT":
+        label="trigger"
+    elif triggerType=="AND" or triggerType=="OR":
+        label="triggers"
+    else:
+        label="word"
+        
+    if triggerType=="NOT":
+        paramString=str(triggerMap[params[0]])
+        
+    if triggerType=="AND" or triggerType=="OR":
+        paramString=str(triggerMap[params[0]])+" and "+str(triggerMap[params[1]])
+        
+    returnParts=[triggerType.capitalize(),"Trigger"," made with ",label,": ",paramString]
+    return "".join(returnParts[:])
 
 
 def readTriggerConfig(filename):
@@ -211,7 +232,7 @@ def readTriggerConfig(filename):
         if len(line) == 0 or line[0] == '#':
             continue
         lines.append(line)
-
+    
     triggers = []
     triggerMap = {}
 
@@ -251,7 +272,7 @@ def main_thread(master):
         
         # TODO: Problem 11
         # After implementing makeTrigger, uncomment the line below:
-        # triggerlist = readTriggerConfig("triggers.txt")
+        triggerlist = readTriggerConfig("triggers.txt")
 
         # **** from here down is about drawing ****
         frame = Frame(master)
@@ -315,3 +336,22 @@ def testNot():
     t=NotTrigger(s)
     koala=NewsStory('', 'Koala bears are soft and cuddly', '', '', '')
     return t.evaluate(koala)
+
+def readTriggerConfig2(filename):
+    """
+    Returns a list of trigger objects
+    that correspond to the rules set
+    in the file filename
+    """
+
+    # Here's some code that we give you
+    # to read in the file and eliminate
+    # blank lines and comments
+    triggerfile = open(filename, "r")
+    all = [ line.rstrip() for line in triggerfile.readlines() ]
+    lines = []
+    for line in all:
+        if len(line) == 0 or line[0] == '#':
+            continue
+        lines.append(line)
+    return lines
