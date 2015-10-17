@@ -89,10 +89,14 @@ class WordTrigger(Trigger):
     def __init__(self,word):
         self.word=word.lower()
     def isWordIn(self,text):
+        # deal with apostrophed words - separate the "s"
         text=text.replace("'s"," s")
+        # make all lower case
         text=text.lower()
+        # remove punctuation
         for i in range(len(string.punctuation)):
             text=text.replace(string.punctuation[i],"")
+        # split line string into words
         text=text.split(" ")
         return self.word in text
 
@@ -161,7 +165,6 @@ def filterStories(stories, triggerlist):
     Returns: a list of only the stories for which a trigger in triggerlist fires.
     """
     # TODO: Problem 10
-    # This is a placeholder (we're just returning all the stories, with no filtering) 
     okStories=[]   
     for story in stories:
         count=0
