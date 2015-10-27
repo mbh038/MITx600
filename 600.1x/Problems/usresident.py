@@ -50,6 +50,7 @@ class USResident(Person):
             self.lastName = name[firstBlank+1:]
         except:
             self.lastName = name
+        self.age = None
         self.status=status
         
     def getStatus(self):

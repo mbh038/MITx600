@@ -154,3 +154,6 @@ def longestRun(L):
             run.pop()
             break
     return len(run)
+
+
+
