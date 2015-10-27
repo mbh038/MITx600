@@ -36,7 +36,7 @@ class USResident(Person):
     """ 
     A Person who resides in the US.
     """
-    def __init__(self, name, status):
+    def __init__(self,name,status):
         """ 
         Initializes a Person object. A USResident object inherits 
         from Person and has one additional attribute:
@@ -44,14 +44,16 @@ class USResident(Person):
         Raises a ValueError if status is not one of those 3 strings
         """
         # Write your code here
-        self.name = name
-        try:
-            firstBlank = name.rindex(' ')
-            self.lastName = name[firstBlank+1:]
-        except:
-            self.lastName = name
-        self.age = None
-        self.status=status
+
+        Person.__init__(self,name)
+        if status =="citizen":
+            self.status=status
+        elif status =="legal_resident":
+            self.status=status
+        elif status =="illegal_resident":
+            self.status=status
+        else:
+            raise ValueError ("%r is not a valid citizen status" % status)
         
     def getStatus(self):
         """
@@ -65,5 +67,40 @@ class USResident(Person):
         elif self.status =="illegal_resident":
             return self.status
         else:
-            raise ValueError
+            raise ValueError ("%r is not a valid citizen status" % self.status)
+
+
+## Test
+a1 = USResident('Tim Beaver', 'citizen')
+print a1.getStatus()
+a2 = USResident('Tim Carver', 'legal_resident')
+print a2.getStatus()
+a3 = USResident('Tim Donaldson', 'illegal_resident')
+print a3.getStatus()
+# b = USResident('Tim Horton', 'non-resident')
+# print b.getStatus()
+a1.setAge(67)
+print a1.getAge()
+print a1
+print a1<a2
+print a2>a3
+a4=Person("Tim Evans")
+a5=Person("Tim Folds")
+print a4
+print a5
+print a4<a5
+print a4>a5
+a4.setAge(65)
+print a4.getAge()
+#print a5.getAge()
+a6=USResident(" Tim ","citizen")
+print a6
+print a6.getStatus()
+a7=USResident(" Tom ","citizen")
+print a7
+print a7.getStatus()
+print a6<a7
+a8=Person(" Tim ")
+print a8
+
 

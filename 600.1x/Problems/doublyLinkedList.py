@@ -41,19 +41,19 @@ def insert(atMe, newFrob):
     """
     # Your Code Here
 
-    def setFrob(middleFrob,beforeFrob=None,afterFrob=None):
+    def setFrob(middleFrob,previousFrob=None,nextFrob=None):
         """
         each argument is a Frob.
         sets the before and after of middleFrob.
         resets the before and after of the frobs either side of middleFronb
         if the y exist. 
         """
-        if afterFrob:
-                middleFrob.setAfter(afterFrob)
-                afterFrob.setBefore(middleFrob)
-        if beforeFrob:
-                middleFrob.setBefore(beforeFrob)
-                beforeFrob.setAfter(middleFrob)
+        if nextFrob:
+                middleFrob.setAfter(nextFrob)
+                nextFrob.setBefore(middleFrob)
+        if previousFrob:
+                middleFrob.setBefore(previousFrob)
+                previousFrob.setAfter(middleFrob)
     
     def findFirst(atMe):
         """
@@ -77,30 +77,24 @@ def insert(atMe, newFrob):
 
     # identify the first and last Frobs in the list
     firstFrob=findFirst(atMe)
-    print "First frob: " + str(firstFrob.myName())
     lastFrob=findLast(atMe)
-    print "Last frob: " + str(lastFrob.myName())
     
     # if name is same as atMe, put it after atMe
     if newFrob.myName() == atMe.myName():
-        print "same as atMe: " +str(newFrob.myName())+", atMe=: " +str(atMe.myName())
         setFrob(newFrob,atMe,atMe.getAfter())
 
     # if name is beyond the end of the list, put it at the end
     elif newFrob.myName() >= lastFrob.myName():
-        print "at end: " +str(newFrob.myName())+", atMe=: " +str(atMe.myName())
         setFrob(newFrob,lastFrob,None)
 
     # if name is before the beginning of the list, put it at the front
     elif newFrob.myName() <= firstFrob.myName():
-        print "at start: " +str(newFrob.myName())+", atMe=: " +str(atMe.myName())
         setFrob(newFrob,None,firstFrob)
 
     # if after atMe but before the end...
     elif newFrob.myName() > atMe.myName() and   newFrob.myName() <lastFrob.myName():
-        print "after atme: " +str(newFrob.myName())+", atMe=: " +str(atMe.myName())
         temp=atMe.getAfter()
-        while temp.getAfter():
+        while temp:
             if newFrob.myName()<= temp.myName():
                 setFrob(newFrob,temp.getBefore(),temp)
                 break
@@ -108,78 +102,23 @@ def insert(atMe, newFrob):
                 
     # if before atMe but after the beginning...
     elif newFrob.myName() < atMe.myName() and   newFrob.myName() > firstFrob.myName():
-        print "before atme: " +str(newFrob.myName())+", atMe=: " +str(atMe.myName())
         temp=atMe.getBefore()
-        while temp.getBefore():
+        while temp:
             if newFrob.myName()>= temp.myName():
                 setFrob(newFrob,temp,temp.getAfter())
                 break
             temp=temp.getBefore()   
 
-# Test
+def findFirst(atMe):
+    """
+    atMe: a Frob that is part of a doubly linked list
+    returns the frob at the front of the list
+    """
+    temp=atMe
+    while temp.getBefore():
+        temp=temp.getBefore()
+    return temp
 
-# to be put in an ordered doubly linked list
-eric = Frob('Eric')
-andrew = Frob('Andrew')
-ruth = Frob('Ruth')
-fred = Frob('Fred')
-martha = Frob('Martha')
-
-john1=Frob("John")
-john2=Frob("John")
-john3=Frob("John")
-john4=Frob("John")
-john5=Frob("John")
-
-# not in the list
-abby=Frob("Abby") # before the first of the list
-zoe=Frob("Zoe") # after the last of the list
-eric2=Frob("Eric") # same name as one of the frobs in the list
-paul=Frob("Paul") # somewhere in the middle of the list
-john=Frob("John")
-blanca=Frob("")
-
-# set up the double linked list, ordered alphabetically
-andrew.setAfter(eric)
-eric.setBefore(andrew)
-eric.setAfter(fred)
-fred.setBefore(eric)
-fred.setAfter(martha)
-martha.setBefore(fred)
-martha.setAfter(ruth)
-ruth.setBefore(martha)
-
-# a list in which all the names are the same
-john1.setAfter(john2)
-john2.setBefore(john1)
-john2.setAfter(john3)
-john3.setBefore(john2)
-john3.setAfter(john4)
-john4.setBefore(john3)
-john4.setAfter(john5)
-john5.setBefore(john4)
-
-
-
-def WalkListForward(node):
-    print "## Walking the list forward ##"
-    temp = findFront(node)
-    while temp:
-        print temp.myName()
-        temp = temp.getAfter()
-        
-def WalkListBackward(node):
-    print "## Walking the list backward ##"
-    temp = findEnd(node)
-    while temp:
-        print temp.myName()
-        temp = temp.getBefore()
-
-##
-##    # Show the linked list 
-##front = find_front(eric)
-##show_tree(front) # andrew eric fred martha martha ruth
-    
 def findFront(start):
     """
     start: a Frob that is part of a doubly linked list
@@ -200,6 +139,86 @@ def findEnd(start):
     else:
         return start
 
+def WalkListForward(node):
+    print "## Walking the list forward ##"
+    temp = findFront(node)
+    while temp:
+        print temp.myName()
+        temp = temp.getAfter()
+        
+def WalkListBackward(node):
+    print "## Walking the list backward ##"
+    temp = findEnd(node)
+    while temp:
+        print temp.myName()
+        temp = temp.getBefore()
+
+## Testing ##
+
+print
+print "Test 2"
+test_list=Frob("gabby")
+insert(test_list, Frob("allison"))
+print ""
+WalkListForward(test_list)
+print ""
+WalkListBackward(test_list)
+
+
+print
+print "Test 2"
+test_list=Frob("gabby")
+insert(test_list, Frob("zara"))
+print ""
+WalkListForward(test_list)
+print ""
+WalkListBackward(test_list)
+
+print
+print "Test 3"
+test_list = Frob('abby')
+insert(test_list, Frob("xander"))
+insert(test_list, Frob("beto"))
+print ""
+WalkListForward(test_list)
+print ""
+WalkListBackward(test_list)
+
+print
+print "Test 4"
+test_list=Frob("alvin")
+insert(test_list, Frob("alvin"))
+print ""
+WalkListForward(test_list)
+print ""
+WalkListBackward(test_list)
+
+print
+print "Test 5"
+test_list = Frob('allison')
+insert(test_list, Frob("lyla"))
+insert(test_list, Frob("christina"))
+insert(test_list, Frob("ben"))
+print ""
+WalkListForward(test_list)
+print ""
+WalkListBackward(test_list)
+
+print
+print "Test 6"
+test_list = Frob('zsa zsa')
+a = Frob('ashley')
+m = Frob('marcella')
+v = Frob('victor')
+insert(test_list, m)
+insert(m, a)
+insert(a, v)
+print ""
+WalkListForward(test_list)
+print ""
+WalkListBackward(test_list)
+
+print
 print "Test 7"
 test_list = Frob('mark')
 c = Frob('craig')
@@ -213,3 +232,35 @@ print ""
 WalkListForward(c)
 print ""
 WalkListBackward(c)
+
+print
+print "Test 8"
+test_list = Frob('leonid')
+a = Frob('amara')
+j1 = Frob('jennifer')
+j2 = Frob('jennifer')
+s = Frob('scott')
+insert(test_list, s)
+insert(s, j1)
+insert(s, j2)
+insert(j1, a)
+print ""
+WalkListForward(test_list)
+print ""
+WalkListBackward(test_list)
+
+print
+print "Test 9"
+test_list = Frob('eric')
+insert(test_list, Frob("eric"))
+insert(test_list, Frob("chris"))
+insert(test_list, Frob("john"))
+insert(test_list, Frob("john"))
+insert(test_list, Frob("chris"))
+insert(test_list, Frob("eric"))
+insert(test_list, Frob("john"))
+insert(test_list, Frob("chris"))
+print ""
+WalkListForward(test_list)
+print ""
+WalkListBackward(test_list)
