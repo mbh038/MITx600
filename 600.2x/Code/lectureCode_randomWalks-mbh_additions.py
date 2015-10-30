@@ -101,7 +101,7 @@ def walk(f, d, numSteps):
 import pylab
 
  #set line width
-pylab.rcParams['lines.linewidth'] = 1
+pylab.rcParams['lines.linewidth'] = 2
  #set font size for titles
 pylab.rcParams['axes.titlesize'] = 20
  #set font size for labels on axes
@@ -111,7 +111,7 @@ pylab.rcParams['xtick.major.size'] = 5
  #set size of numbers on y-axis
 pylab.rcParams['ytick.major.size'] = 5
  #set size of markers
-pylab.rcParams['lines.markersize'] = 1
+pylab.rcParams['lines.markersize'] = 0
 
 
 
@@ -149,7 +149,8 @@ def drunkTestP2(numTrials = 1):
     stepsTaken = 10000
     f=Field() 
     start=Location(0,0)
-    for d in (UsualDrunk("Asterix"),UsualDrunk("Obelix")):
+    #for d in (UsualDrunk("Asterix"),UsualDrunk("Obelix")):
+    for d in (UsualDrunk,UsualDrunk):
         locationsX=[]
         locationsY=[]
         f.addDrunk(d, start)   
@@ -158,8 +159,6 @@ def drunkTestP2(numTrials = 1):
             locationsX.append(loc.getX())
             locationsY.append(loc.getY())
             f.moveDrunk(d)
-        #print locationsX,
-        #print locationsY
         pylab.plot(locationsX, locationsY,label=d)
         pylab.title('2D random walk')
         pylab.xlabel('X direction')
