@@ -73,81 +73,6 @@ class Drunk(object):
     def __str__(self):
         return 'This drunk is named ' + self.name
     
-class UsualDrunk(Drunk):
-    def takeStep(self):
-        stepChoices =\
-            [(0.0,1.0), (0.0,-1.0), (1.0, 0.0), (-1.0, 0.0)]
-        return random.choice(stepChoices)
-
-
-def walk(f, d, numSteps):
-    start = f.getLoc(d)
-    for s in range(numSteps):
-        f.moveDrunk(d)
-    return(start.distFrom(f.getLoc(d)))
-
-
-
-## import pylab
-
-## #set line width
-## pylab.rcParams['lines.linewidth'] = 6
-## #set font size for titles
-## pylab.rcParams['axes.titlesize'] = 20
-## #set font size for labels on axes
-## pylab.rcParams['axes.labelsize'] = 20
-## #set size of numbers on x-axis
-## pylab.rcParams['xtick.major.size'] = 5
-## #set size of numbers on y-axis
-## pylab.rcParams['ytick.major.size'] = 5
-## #set size of markers
-## pylab.rcParams['lines.markersize'] = 10
-
-
-###Start code added in Segment 4
-
-
-
-def drunkTestP(numTrials = 50):
-    stepsTaken = [10, 100, 1000, 10000]
-    meanDistances = []
-    for numSteps in stepsTaken:
-        distances = simWalks(numSteps, numTrials)
-        meanDistances.append(sum(distances)/len(distances))
-    pylab.plot(stepsTaken, meanDistances)
-    pylab.title('Mean Distance from Origin')
-    pylab.xlabel('Steps Taken')
-    pylab.ylabel('Steps from Origin')
-    pylab.show()
-
-
-
-
-    
-def drunkTestP1(numTrials = 50):
-    stepsTaken = [10, 100, 1000, 10000]
-    meanDistances = []
-    squareRootOfSteps = []
-    for numSteps in stepsTaken:
-        distances = simWalks(numSteps, numTrials)
-        meanDistances.append(sum(distances)/len(distances))
-        squareRootOfSteps.append(numSteps**0.5)
-    pylab.plot(stepsTaken, meanDistances, 'b-',
-               label = 'Mean distance')
-    pylab.plot(stepsTaken, squareRootOfSteps, 'g-.',
-               label = 'Square root of steps')
-    pylab.title('Mean Distance from Origin')
-    pylab.xlabel('Steps Taken')
-    pylab.ylabel('Steps from Origin')
-    pylab.legend()
-    pylab.show()
-
-
-
-
-
-
-
 #Look at different kinds of drunks
 
 class UsualDrunk(Drunk):
@@ -171,6 +96,34 @@ class EDrunk(Drunk):
         if random.random() < 0.5:
             deltaY = -deltaY
         return (deltaX, deltaY)
+
+
+def walk(f, d, numSteps):
+    start = f.getLoc(d)
+    for s in range(numSteps):
+        f.moveDrunk(d)
+    return(start.distFrom(f.getLoc(d)))
+
+
+
+import pylab
+
+ #set line width
+pylab.rcParams['lines.linewidth'] = 6
+ #set font size for titles
+pylab.rcParams['axes.titlesize'] = 20
+ #set font size for labels on axes
+pylab.rcParams['axes.labelsize'] = 20
+ #set size of numbers on x-axis
+pylab.rcParams['xtick.major.size'] = 5
+ #set size of numbers on y-axis
+pylab.rcParams['ytick.major.size'] = 5
+ #set size of markers
+pylab.rcParams['lines.markersize'] = 10
+
+
+
+
 
 # New version of simWalks
 
@@ -200,4 +153,17 @@ def drunkTestP(numTrials = 50):
         pylab.legend(loc = 'upper left')
     pylab.show()
 
-
+def drunkTestP2(numTrials = 1):
+    stepsTaken = [10000]
+    for dClass in (UsualDrunk):
+        locations = []
+        for numSteps in stepsTaken:
+            distances = simWalks(numSteps, numTrials, dClass)
+            meanDistances.append(sum(distances)/len(distances))
+        pylab.plot(stepsTaken, meanDistances,
+                   label = dClass.__name__)
+        pylab.title('Mean Distance from Origin')
+        pylab.xlabel('Steps Taken')
+        pylab.ylabel('Steps from Origin')
+        pylab.legend(loc = 'upper left')
+    pylab.show()
