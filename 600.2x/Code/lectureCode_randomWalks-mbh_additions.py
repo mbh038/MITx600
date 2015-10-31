@@ -149,8 +149,8 @@ def drunkTestP2(numTrials = 1):
     stepsTaken = 10000
     f=Field() 
     start=Location(0,0)
-    #for d in (UsualDrunk("Asterix"),UsualDrunk("Obelix")):
-    for d in (UsualDrunk,UsualDrunk):
+    for d in (UsualDrunk("Asterix"),UsualDrunk("Obelix")):
+    #for d in (UsualDrunk,UsualDrunk):
         locationsX=[]
         locationsY=[]
         f.addDrunk(d, start)   
