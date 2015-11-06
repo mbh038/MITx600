@@ -269,6 +269,12 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
+    room=RectangularRoom(width,height)
+    robots=[]
+    for i in range (num_robots):
+        robots.append()
+        for j in range (num_trials):
+        
     raise NotImplementedError
 
 # Uncomment this line to see how much your simulation takes on average
