@@ -351,11 +351,12 @@ def showPlot2(title, x_label, y_label):
     """
     What information does the plot produced by this function tell you?
     """
-    aspect_ratios = []
+    #aspect_ratios = []
     times1 = []
     times2 = []
-    for width in [10, 20, 25, 50]:
-        height = 300/width
+    aspect_ratios=[]
+    for width in [10,15,20,25,35,50]:
+        height=300/width
         print "Plotting cleaning time for a room of width:", width, "by height:", height
         aspect_ratios.append(float(width) / height)
         times1.append(runSimulation(2, 1.0, width, height, 0.8, 200, StandardRobot))
