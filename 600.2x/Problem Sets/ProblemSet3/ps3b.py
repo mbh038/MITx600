@@ -202,28 +202,19 @@ def simulationWithoutDrug(numViruses,maxPop,maxBirthProb,clearProb,numTrials):
 
     timeSteps=list(range(300))
     popList=[0]*len(timeSteps)
-    virusList=[]
-    patientList=[]
-#    print len(popList), len(virusList),len(patientList) 
-    
-    for i in range(numViruses):
-        virusList.append(SimpleVirus(maxBirthProb,clearProb))
-    for i in range(numTrials):
-        patientList.append(Patient(virusList,maxPop))
-    
+       
     for i in range(numTrials): #in patientList:
-       # print "Total pop is: ",patientList[i].getTotalPop()
-        for j in range(len(timeSteps)):
-            if patientList[i].getTotalPop()>0:
-                updt=patientList[i].update()
-                #print updt
-                popList[j] += updt
-        #print popList[0],popList[-1]    
-    #print count
+       
+       virusList=[]
+       for j in range(numViruses):   
+           virusList.append(SimpleVirus(maxBirthProb,clearProb))
+       patient=Patient(virusList,maxPop)
+       for k in range(len(timeSteps)):
+           if patient.getTotalPop()>0:
+               popList[k] += patient.update()
 
     popList[:] = [float(x) / numTrials for x in popList]
-    #print popList
-   
+
     pylab.plot(timeSteps, popList)
     pylab.title("Virus population change with time")
     pylab.legend("Virus population")
@@ -232,11 +223,10 @@ def simulationWithoutDrug(numViruses,maxPop,maxBirthProb,clearProb,numTrials):
     pylab.show()
 
 
-#simulationWithoutDrug(1, 10, 1.0, 0.0, 1)
-#simulationWithoutDrug(100, 200, 0.2, 0.8, 1)
-#simulationWithoutDrug(1, 90, 0.8, 0.1, 1)
-#simulationWithoutDrug(100,1000,.1,.05,2)
-#simulationWithoutDrug(maxBirthProb=0.1,numTrials=100)
+#simulationWithoutDrug(1, 10, 1.0, 0.0, 5)
+#simulationWithoutDrug(100, 200, 0.2, 0.8, 5)
+#simulationWithoutDrug(1, 90, 0.8, 0.1, 5)
+#simulationWithoutDrug(100,1000,.1,.05,100)
 
 # PROBLEM 4
 #
@@ -537,46 +527,28 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     timeSteps=list(range(300))
     popList=[0]*len(timeSteps)
     resList=[0]*len(timeSteps)
-    virusList=[]
-#    patientList=[]
-#    print len(popList), len(virusList),len(patientList) 
-    
-    for i in range(numViruses):
-        virusList.append(ResistantVirus(maxBirthProb,clearProb,resistances,mutProb))
-#    for i in range(numTrials):
-#        patientList.append(TreatedPatient(virusList,maxPop))
-    
+   
     for i in range(numTrials): #in patientList:
+        virusList=[]
+        for j in range(numViruses):   
+           virusList.append(ResistantVirus(maxBirthProb,clearProb,resistances,mutProb))
         patient=TreatedPatient(virusList,maxPop)
         for j in timeSteps[:150]:
             if patient.getTotalPop()>0:
-                updt=patient.update()
-                popList[j] += updt
+                popList[j] += patient.update()
                 if resistances != {}:
-                    rupdt=patient.getResistPop(resistances)
-                #print updt
-                
-                    resList[j] += rupdt
+                    resList[j] += patient.getResistPop(resistances)
                 
         patient.addPrescription('guttagonol')
      
         for j in timeSteps[150:]:
             if patient.getTotalPop()>0:
-                updt=patient.update()
-                popList[j] += updt
+                popList[j] += patient.update()
                 if resistances != {}:
-                    rupdt=patient.getResistPop(resistances)
-                #print updt
-                
-                    resList[j] += rupdt    
-    
-    #print popList[0],popList[-1]    
-    #print count
+                    resList[j] += patient.getResistPop(resistances)    
 
     popList[:] = [float(x) / numTrials for x in popList]
     resList[:] = [float(x) / numTrials for x in resList]
-    #print popList
-    #print resList
    
     pylab.figure
     pylab.plot(timeSteps, popList)
@@ -590,8 +562,8 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
 #simulationWithDrug(numViruses=100,maxPop=1000,maxBirthProb=0.1,clearProb=0.05,
 #                   resistances={'guttagonol': False},mutProb=0.005,numTrials=1)
 #                   
-simulationWithDrug(1, 10, 1.0, 0.0, {}, 1.0, 5)
-simulationWithDrug(1, 20, 1.0, 0.0, {"guttagonol": True}, 1.0, 5)
-simulationWithDrug(75, 100, .8, 0.1, {"guttagonol": True}, 0.8, 1)
+#simulationWithDrug(1, 10, 1.0, 0.0, {}, 1.0, 5)
+#simulationWithDrug(1, 20, 1.0, 0.0, {"guttagonol": True}, 1.0, 5)
+simulationWithDrug(75, 100, .8, 0.1, {"guttagonol": True}, 0.8, 100)
 
 
