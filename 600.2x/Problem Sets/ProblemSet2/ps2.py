@@ -2,6 +2,7 @@
 
 import math
 import random
+import numpy
 
 import ps2_visualize
 import pylab
@@ -247,7 +248,7 @@ class StandardRobot(Robot):
 
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-testRobotMovement(StandardRobot, RectangularRoom)
+# testRobotMovement(StandardRobot, RectangularRoom)
 
 
 # === Problem 3
@@ -269,7 +270,29 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-    raise NotImplementedError
+#    anim = ps2_visualize.RobotVisualization(num_robots, width, height,delay=0.05)
+    steps=[0]*num_trials
+    fractionCleaned=0
+    for i in range (num_trials): 
+        room=RectangularRoom(width,height)
+        roomSize=room.getNumTiles()
+        robots=[]
+        for j in range(num_robots):
+            robots.append(robot_type(room,speed))
+        fractionCleaned=float(room.getNumCleanedTiles())/roomSize
+        while fractionCleaned < min_coverage:             
+            for each_robot in robots:
+#                anim.update(room, robots)
+                each_robot.updatePositionAndClean()     
+            steps[i] += 1
+            fractionCleaned=float(room.getNumCleanedTiles())/roomSize          
+#    anim.done()
+    return float(sum(steps))/num_trials
+    
+# Test
+#avg = runSimulation(2, 1.0, 5, 5, .75, 10, StandardRobot)
+#print avg
+
 
 # Uncomment this line to see how much your simulation takes on average
 ##print  runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot)
@@ -288,8 +311,21 @@ class RandomWalkRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        #pos=self.getRobotPosition()
+        speed=self.speed
+        room=self.room
+        angle=self.getRobotDirection()
+        pos=self.getRobotPosition()
+        newPos=pos.getNewPosition(angle, speed)
+        if room.isPositionInRoom(newPos)==True:
+            self.setRobotPosition(newPos)
+            room.cleanTileAtPosition(newPos)
+        self.setRobotDirection(360*random.random())
 
+
+# Test
+#avg = runSimulation(1, 1.0, 10, 10, .75, 10, RandomWalkRobot)
+#print avg
 
 def showPlot1(title, x_label, y_label):
     """
@@ -315,11 +351,12 @@ def showPlot2(title, x_label, y_label):
     """
     What information does the plot produced by this function tell you?
     """
-    aspect_ratios = []
+    #aspect_ratios = []
     times1 = []
     times2 = []
-    for width in [10, 20, 25, 50]:
-        height = 300/width
+    aspect_ratios=[]
+    for width in [10,15,20,25,35,50]:
+        height=300/width
         print "Plotting cleaning time for a room of width:", width, "by height:", height
         aspect_ratios.append(float(width) / height)
         times1.append(runSimulation(2, 1.0, width, height, 0.8, 200, StandardRobot))
@@ -337,15 +374,13 @@ def showPlot2(title, x_label, y_label):
 #
 # 1) Write a function call to showPlot1 that generates an appropriately-labeled
 #     plot.
-#
-#       (... your call here ...)
-#
+# showPlot1("title", "x_label", "y_label")
 
 #
 # 2) Write a function call to showPlot2 that generates an appropriately-labeled
 #     plot.
 #
-#       (... your call here ...)
+showPlot2("title", "x_label", "y_label")
 #
 # Testing
 #width=4
