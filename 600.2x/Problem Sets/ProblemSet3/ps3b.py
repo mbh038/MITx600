@@ -554,7 +554,7 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     pylab.plot(timeSteps, popList)
     pylab.plot(timeSteps, resList)
     pylab.title("Virus population change with time")
-    pylab.legend("Virus population","Resistant population")
+    pylab.legend("Virus population","Resistant population",loc='best')
     pylab.xlabel("Time steps")
     pylab.ylabel("Virus population")
     pylab.show()
@@ -564,6 +564,6 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
 #                   
 #simulationWithDrug(1, 10, 1.0, 0.0, {}, 1.0, 5)
 #simulationWithDrug(1, 20, 1.0, 0.0, {"guttagonol": True}, 1.0, 5)
-simulationWithDrug(75, 100, .8, 0.1, {"guttagonol": True}, 0.8, 100)
+simulationWithDrug(100, 1000, .1, 0.05, {"guttagonol": False}, 0.005, 100)
 
 

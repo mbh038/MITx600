@@ -22,8 +22,8 @@ def plotData(fileName):
     pylab.xlabel('Force (Newtons)')
     pylab.ylabel('Distance (meters)')
 
-##plotData('lectureCode_springData.txt')
-##pylab.show()
+plotData('lectureCode_springData.txt')
+pylab.show()
 
 def testErrors(ntrials=10000,npts=100):
     results = [0] * ntrials
@@ -38,8 +38,8 @@ def testErrors(ntrials=10000,npts=100):
     pylab.xlabel('Sum')
     pylab.ylabel('Number of trials')
 
-testErrors(10000,1000)
-pylab.show()
+#testErrors(10000,1000)
+#pylab.show()
 
 
 def fitData(fileName):
@@ -59,8 +59,8 @@ def fitData(fileName):
                + str(round(k, 5)))
     pylab.legend(loc = 'best')
 
-##fitData('springData.txt')
-##pylab.show()
+fitData('lectureCode_springData.txt')
+pylab.show()
 
 def fitData1(fileName):
     xVals, yVals = getData(fileName)
@@ -79,8 +79,8 @@ def fitData1(fileName):
     pylab.plot(xVals, estYVals, label = 'Cubic fit')
     pylab.legend(loc = 'best')
 
-##fitData1('springData.txt')
-##pylab.show()
+fitData1('lectureCode_springData.txt')
+pylab.show()
 
 def fitData2(fileName):
     xVals, yVals = getData(fileName)
@@ -101,8 +101,8 @@ def fitData2(fileName):
     pylab.plot(extX, estYVals, label = 'Cubic fit')
     pylab.legend(loc = 'best')
 
-##fitData2('springData.txt')
-##pylab.show()
+fitData2('lectureCode_springData.txt')
+pylab.show()
 
 def fitData3(fileName):
     xVals, yVals = getData(fileName)
@@ -121,8 +121,8 @@ def fitData3(fileName):
                + str(round(k, 5)))
     pylab.legend(loc = 'best')
 
-##fitData3('springData.txt')
-##pylab.show()
+fitData3('lectureCode_springData.txt')
+pylab.show()
 
 def getTrajectoryData(fileName):
     dataFile = open(fileName, 'r')
@@ -160,8 +160,8 @@ def tryFits(fName):
                label = 'Quadratic Fit')
     pylab.legend()
 
-##tryFits('launcherData.txt')
-##pylab.show()
+tryFits('lectureCode_launcherData.txt')
+pylab.show()
 
 def rSquare(measured, estimated):
     """measured: one dimensional array of measured values
@@ -194,7 +194,7 @@ def tryFits1(fName):
                + str(round(rSquare(meanHeights, altitudes), 4)))
     pylab.legend()
 
-##tryFits1('launcherData.txt')
-##pylab.show()
+tryFits1('lectureCode_launcherData.txt')
+pylab.show()
 
 
