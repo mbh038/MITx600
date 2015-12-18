@@ -288,6 +288,17 @@ def test():
 #    hCluster(points, Cluster.maxLinkageDist, 3, False)
 #    hCluster(points, Cluster.averageLinkageDist, 3, False)
 
-test()
+#test()
 
-
+def exam():
+    points=buildCityPoints('exam.txt', False)
+    print "Single"
+    hCluster(points, Cluster.singleLinkageDist, 3, False)
+    print "Max"
+    hCluster(points, Cluster.maxLinkageDist, 3, False)
+    print " Average"
+    hCluster(points, Cluster.averageLinkageDist, 3, False)
+    print "Mystery"
+    hCluster(points, Cluster.mysteryLinkageDist, 3, False)
+    
+exam()
